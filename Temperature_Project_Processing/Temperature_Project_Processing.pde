@@ -34,8 +34,7 @@ void draw() {
   textSize(20);
   text("DS18B20 Temp: " + ds18b20Temp + " °C", 50, 50);
   text("DHT11 Temp: " + dht11Temp + " °C", 50, 100);
-  //text("DHT11 Humidity: " + dht11Hum + " %", 50, 150);
-  text("LM35 Temp: " + lm35Temp + " °C", 50, 200);
+  text("LM35 Temp: " + lm35Temp + " °C", 50, 150);
 }
 
 void serialEvent(Serial p) {
@@ -48,13 +47,12 @@ void serialEvent(Serial p) {
     // Split the incoming CSV data by commas
     String[] data = split(incomingData, ',');
     
-    if (data.length == 5) {
+    if (data.length == 4) {
       // Parse the CSV data into sensor values
       try {
         ds18b20Temp = float(data[1]);  // DS18B20 temperature
         dht11Temp = float(data[2]);    // DHT11 temperature
-        dht11Hum = float(data[3]);     // DHT11 humidity
-        lm35Temp = float(data[4]);     // LM35 temperature
+        lm35Temp = float(data[3]);     // LM35 temperature
       } catch (Exception e) {
         println("Error parsing data: " + e.getMessage());
       }
