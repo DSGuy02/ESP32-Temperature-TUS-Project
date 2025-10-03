@@ -9,7 +9,7 @@ import processing.serial.*;
 
 Serial myPort;
 String incomingData = "";
-float ds18b20Temp, dht11Temp, lm35Temp;
+float ds18b20Temp, dht11Temp, lm35Temp, bme280Temp;
 
 void setup() {
   size(600, 400);
@@ -30,6 +30,7 @@ void draw() {
   text("DS18B20 Temp: " + ds18b20Temp + " °C", 50, 50);
   text("DHT11 Temp: " + dht11Temp + " °C", 50, 100);
   text("LM35 Temp: " + lm35Temp + " °C", 50, 150);
+  text("BME280 Temp: " + bme280Temp + " °C", 50, 200);
 }
 
 void serialEvent(Serial p) {
@@ -39,11 +40,12 @@ void serialEvent(Serial p) {
     incomingData = trim(incomingData);  // Remove spaces
     String[] data = split(incomingData, ',');
     
-    if (data.length == 4) {
+    if (data.length == 5) {
       try {
         ds18b20Temp = float(data[1]);  // DS18B20 temperature
         dht11Temp = float(data[2]);    // DHT11 temperature
         lm35Temp = float(data[3]);     // LM35 temperature
+        bme280Temp = float(data[4]);   // BME280 temperature
       } catch (Exception e) {
         println("Error parsing data: " + e.getMessage());
       }
